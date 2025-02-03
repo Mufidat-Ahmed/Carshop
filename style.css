@@ -1,0 +1,58 @@
+/*Header Section*/
+
+.upper-header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.social-icons a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: white;
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+
+/* End of Header Section*/
+
+
+/*Footer Section*/
+
+.footer {
+    background-color: #222;
+}
+
+.footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+.map-container {
+    width: 100%;
+    height: 150px;
+}
