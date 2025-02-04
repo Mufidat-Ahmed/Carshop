@@ -37,6 +37,62 @@
 /* End of Header Section*/
 
 
+/*About Us*/
+
+.about-us {
+    display: flex;
+    /* Places divs in a row */
+    justify-content: space-evenly;
+    /* Spacing between items */
+    align-items: center;
+}
+
+.about-us div {
+    text-align: center;
+    /* Centers content */
+    flex: 1;
+    /* Equal width */
+    max-width: 100%;
+    /* Adjusts size */
+}
+
+.img-fluid {
+    width: 100%;
+    /* Ensures images are responsive */
+    height: auto;
+    max-height: 200px;
+    /* Adjust as needed */
+    border-radius: 8px;
+    /* Optional styling */
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .about-us {
+        flex-direction: column;
+        /* Stack items on smaller screens */
+        align-items: center;
+    }
+    .about-us div {
+        max-width: 100%;
+        /* Full width on mobile */
+    }
+}
+
+
 /*Footer Section*/
 
 .footer {
