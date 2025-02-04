@@ -1,0 +1,208 @@
+/*Header Section*/
+
+.upper-header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.social-icons a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: white;
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+
+/* End of Header Section*/
+
+
+/* General Styles */
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+
+/* Inventory Card */
+
+.card-box {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 columns */
+    gap: 8px;
+    font-size: 14px;
+}
+
+
+/* Car Image */
+
+.car-img {
+    width: 250px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+
+/* Car Details */
+
+.car-info {
+    flex-grow: 1;
+}
+
+
+/* Car Title */
+
+.car-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
+/* Brand */
+
+.brand {
+    font-size: 14px;
+    color: gray;
+}
+
+
+/* Details */
+
+.details {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+
+/* Button Box */
+
+.btn-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+
+/* Get Price Button */
+
+.btn-price {
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .card-box {
+        flex-direction: column;
+        align-items: center;
+    }
+    .car-img {
+        width: 100%;
+        border-radius: 8px 8px 0 0;
+    }
+}
+
+
+/*Footer Section*/
+
+.footer {
+    background-color: #222;
+}
+
+.footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+.map-container {
+    width: 100%;
+    height: 150px;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.inventory-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.car-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 0 0 8px;
+}
+
+.car-details {
+    padding: 15px;
+}
+
+.car-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.detail-section {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.btn-group-custom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.btn-custom {
+    flex: 1;
+    margin: 5px;
+}
+
+.btn-price {
+    font-weight: bold;
+    background: #007bff;
+    color: white;
+}
