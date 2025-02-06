@@ -15,7 +15,7 @@
     <!----Header section-->
     <!-- Upper Header -->
     <div class="upper-header text-center">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="upper">
             <div>
                 <span>📍 123 Car Street, AutoCity</span> |
                 <span>📞 +234 901 234 5678</span>
@@ -31,7 +31,8 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#">CarShop</a>
+            <a class="navbar-brand" href="index.html">
+                <img src="./assets/logo.png" alt="logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -65,37 +66,60 @@
         </div>
     </nav>
     <!-----End of Header Section-->
-    <section class="about-us">
-        <div class="invent">
-            <div>
-                <a href="./Inventory/inventory.html">
-                    <img src="./assets/1.jpeg" alt="Inventory" class="img-fluid">
-                </a>
-                <p>We offer the finest pre-owned vehicles</p>
-                <a href="./Inventory/inventory.html" class="btn">Inventory</a>
-            </div>
-        </div>
-
-        <div class="apply">
-            <div>
-                <a href="#">
-                    <img src="./assets/1.jpeg" alt="Apply Online" class="img-fluid">
-                </a>
-                <p>We offer the finest pre-owned vehicles</p>
-                <a href="#" class="btn">Apply Online</a>
-            </div>
-        </div>
-
-        <div class="find-us">
-            <div>
-                <a href="#">
-                    <img src="./assets/1.jpeg" alt="Find Us" class="img-fluid">
-                </a>
-                <p>We offer the finest pre-owned vehicles</p>
-                <a href="#" class="btn">Find Us</a>
+    <!----image banner section-->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-container">
+                <video class="video" autoplay loop muted playsinline>
+                    <source src="./assets/v.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
     </section>
+    <!----End of banner section-->
+    <!----About us sectiom-->
+    <section class="about-us">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 about-item" style="background-image: url('./assets/1.jpeg');">
+                    <div class="img-container">
+                        <img src="./assets/1.jpeg" alt="Inventory">
+                    </div>
+                    <p>We offer the finest pre-owned vehicles</p>
+                    <a href="/Inventory/inventory.html" class="btn btn-overlay">View Inventory</a>
+                </div>
+                <div class="col-md-4 about-item" style="background-image: url('./assets/2.jpeg');">
+                    <div class="img-container">
+                        <img src="./assets/c.jpeg" alt="Apply Online">
+                    </div>
+                    <p>Get financing with ease</p>
+                    <a href="#" class="btn btn-overlay">Apply Online</a>
+                </div>
+                <div class="col-md-4 about-item" style="background-image: url('./assets/3.jpeg');">
+                    <div class="img-container">
+                        <img src="./assets/map.jpeg" alt="Find Us">
+                    </div>
+                    <p>Locate us easily</p>
+                    <a href="#" class="btn btn-overlay">Find Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!----End of about us section-->
+    <!---Ad section-->
+    <section class="ad-section">
+        <div class="ad-card">
+            <ul class="ad-list">
+                <li>No SSN is OK</li>
+                <li>No DL is OK</li>
+                <li>No minimum job time is OK</li>
+                <li>Any type of income is OK</li>
+                <li>Down Payment as low as $999</li>
+            </ul>
+        </div>
+    </section>
+    <!---End of ad section-->
 
 </body>
 <!-- Footer Section -->
@@ -141,5 +165,14 @@
 
     </div>
 </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const video = document.querySelector(".video");
+
+        video.addEventListener("ended", function() {
+            video.play();
+        });
+    });
+</script>
 
 </html>

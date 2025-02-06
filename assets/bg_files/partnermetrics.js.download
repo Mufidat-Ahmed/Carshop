@@ -1,0 +1,1332 @@
+/* eslint-disable no-underscore-dangle */
+(function (window, document, undefined) {
+    var ___c = window.CarGurus;
+    if (!___c.Code) {
+        ___c.Code = {
+            HOST: "https://www.cargurus.com",
+            __n: ___c,
+            __d: ___c.Data,
+            _l: console,
+            _cb_dr: [],
+            _cb_xo: [],
+            _OnDomReady: function () {
+                for (var i = 0; i < this._cb_dr.length; i++) {
+                    this._cb_dr[i]();
+                }
+                this._cb_dr = [];
+            },
+            _XHROpen: function (m, u) {
+                for (var i = 0; i < this._cb_xo.length; i++) {
+                    this._cb_xo[i](m, u);
+                }
+            },
+            _initdata: function () {
+                if (!this.__d) {
+                    this.__d = {};
+                }
+                if (___c.Options) {
+                    this.mergeObjects(this.__d, ___c.Options);
+                }
+                if (this.__d.Dev) {
+                    this.HOST = window.location.protocol + '//' + window.location.hostname;
+                }
+            },
+            log: function (x) {
+                this._l.log(x);
+            },
+            mergeObjects: function (obj, src) {
+                for (var key in src) {
+                    if (src.hasOwnProperty(key)) {
+                        obj[key] = src[key];
+                    }
+                }
+                return obj;
+            },
+            runWithTimer: function (callback, timer, interval) {
+                if (!interval) {
+                    callback();
+                } else {
+                    window.clearTimeout(timer);
+                    timer = window.setTimeout(callback, interval);
+                }
+                return timer;
+            },
+            runOnDomReady: function (callback) {
+                this._cb_dr.push(callback);
+            },
+            toJSON: function (o) {
+                if (JSON && JSON.stringify) {
+                    return JSON.stringify(o);
+                }
+                var s = "";
+                if (o instanceof Array) {
+                    s += "[";
+                    for (var i = 0; i < o.length; i++) {
+                        s += this.toJSON(o[i]) + ",";
+                    }
+                    s += "]";
+                } else if (typeof o == "object") {
+                    s += "{";
+                    for (var k in o) {
+                        s += k + ":" + this.toJSON(o[k]) + ",";
+                    }
+                    s += "}";
+                } else {
+                    s += "" + o;
+                }
+            },
+            fromJSON: function (s) {
+                if (JSON && JSON.parse) {
+                    return JSON.parse(s);
+                }
+                return null;
+            },
+            attachElement: function (src, tag, id, where, parent) {
+                if (src) {
+                    var e;
+                    var t = tag || "img";
+                    if (t === "img") {
+                        e = new Image();
+                        e.src = src;
+                    } else {
+                        var p = parent || document;
+                        e = p.createElement(t);
+                        if (t === "script") {
+                            e.language = "javascript";
+                            e.type = "text/javascript";
+                            e.async = 1;
+                            e.src = src;
+                        } else {
+                            e.setAttribute("src", src);
+                            e.setAttribute("style", "display:none");
+                        }
+                        if (id) {
+                            e.id = id;
+                        }
+                        var w = where || "head";
+                        var we = p.getElementsByTagName(w)[0];
+                        if (we) {
+                            we.appendChild(e);
+                        }
+                    }
+                }
+            },
+            createXHR: function () {
+                try {
+                    return new XMLHttpRequest();
+                } catch (e) { } // eslint-disable-line no-empty
+            },
+            tapXHR: function () {
+                try {
+                    var _l_pc = this;
+                    var xhr = this.createXHR();
+                    if (xhr) {
+                        var ooh = XMLHttpRequest.prototype.open;
+                        XMLHttpRequest.prototype.open = function (m, u, f) {
+                            try {
+                                _l_pc._XHROpen(m, u);
+                                if (f === undefined) {
+                                    ooh.call(this, m, u);
+                                } else {
+                                    ooh.call(this, m, u, f);
+                                }
+                            } catch (ex) {
+                                _l_pc.log("Could not run XHRox");
+                            }
+                        };
+                    }
+                    if (window.jQuery && window.jQuery.ajax) {
+                        if (window.jQuery.on) {
+                            window.jQuery.on("ajaxSend", function (e, x, s) {
+                                try {
+                                    _l_pc._XHROpen(s.method, s.url);
+                                } catch (ej) {
+                                    _l_pc.log("Could not run XHRsj");
+                                }
+                            });
+                        } else if (window.jQuery.ajaxSend) {
+                            window.jQuery.ajaxSend(function (e, x, s) {
+                                try {
+                                    _l_pc._XHROpen(s.method, s.url);
+                                } catch (ej) {
+                                    _l_pc.log("Could not run XHRsj");
+                                }
+                            });
+                        }
+                    }
+                    if (typeof XDomainRequest != "undefined") {
+                        var ood = XDomainRequest.prototype.open;
+                        XDomainRequest.prototype.open = function (m, u) {
+                            try {
+                                _l_pc._XHROpen(m, u);
+                                ood.call(this, m, u);
+                            } catch (ed) {
+                                _l_pc.log("Could not run XHRod");
+                            }
+                        };
+                    }
+                } catch (e) {
+                    this.log("Could not tap XHR");
+                }
+            },
+            runOnXHRo: function (callback) {
+                this._cb_xo.push(callback);
+            },
+            createCORSRequest: function (method, url) {
+                var xhr = this.createXHR();
+                if ("withCredentials" in xhr) {
+                    xhr.open(method, url, true);
+                    xhr.withCredentials = true;
+                } else if (typeof XDomainRequest != "undefined") {
+                    xhr = new XDomainRequest();
+                    xhr.open(method, url);
+                } else {
+                    xhr = null;
+                }
+                return xhr;
+            },
+            setCookie: function (cn, cv, d) {
+                var e = null;
+                if (d > 0) {
+                    e = new Date();
+                    e.setTime(e.getTime() + (d * 24 * 3600 * 1000));
+                } else if (d === -1) {
+                    e = new Date();
+                    e.setTime(e.getTime() + (5 * 1000));
+                }
+                var c = cn + "=" + encodeURIComponent(cv) + ((e == null) ? "" : "; expires=" +
+                    e.toGMTString()) + "; path=/; ";
+                document.cookie = c;
+            },
+            getCookie: function (n) {
+                var cs = document.cookie;
+                if (cs === null || cs === undefined) {
+                    return null;
+                }
+
+                var p = n + '=';
+                var b = cs.indexOf('; ' + p);
+                if (b === -1) {
+                    b = cs.indexOf(p);
+                    if (b === -1) {
+                        return null;
+                    }
+                } else {
+                    b += 2;
+                }
+
+                var e = cs.indexOf(';', b);
+                if (e === -1) {
+                    e = cs.length;
+                }
+                return decodeURIComponent(cs.substring(b + p.length, e));
+            },
+            removeCookie: function (name) {
+                this.setCookie(name, "", -1);
+            },
+            setJSONCookie: function (n, o, d) {
+                var v = this.toJSON(o);
+                if (v !== "") {
+                    this.setCookie(n, v, d);
+                }
+            },
+            getJSONCookie: function (n) {
+                var v = this.getCookie(n);
+                if (v != null && v != "") {
+                    return this.fromJSON(v);
+                }
+                return null;
+            },
+            parseURL: function (u) {
+                var se = -1,
+                    hs = 0,
+                    he = u.length,
+                    ps = 0,
+                    pe = 0;
+                for (var i = 0; i < u.length; i++) {
+                    if (se < 0 && hs == 0 && u.charAt(i) == ':') {
+                        se = i;
+                    }
+                    if (hs == 0 && i > 1 && u.charAt(i - 1) == '/' && u.charAt(i - 2) == '/') {
+                        hs = i;
+                    }
+                    if (hs > 0) {
+                        if (u.charAt(i) == ':') {
+                            he = i;
+                        }
+                        if (u.charAt(i - 1) == ':') {
+                            ps = i;
+                        }
+                        if (u.charAt(i) == '/') {
+                            if (ps > 0) {
+                                pe = i;
+                            } else {
+                                he = i;
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (hs == 0) {
+                    return null;
+                }
+                var p = null;
+                if (ps > 0) {
+                    pe = pe > 0 ? pe : u.length;
+                    p = u.substring(ps, pe);
+                }
+                var us = pe > 0 ? pe : he;
+                return {
+                    s: se < 0 ? null : u.substring(0, se),
+                    h: u.substring(hs, he),
+                    p: p,
+                    u: us == u.length ? null : u.substring(us)
+                };
+            },
+            parseURI: function (u) {
+                var q = -1,
+                    ps = -1,
+                    pe = 0,
+                    vs = 0,
+                    ve = 0,
+                    hs = 0;
+                var p = {};
+                for (var i = 0; i < u.length; i++) {
+                    if (q < 0 && u.charAt(i) == '?') {
+                        q = i;
+                        ps = i + 1;
+                    }
+                    if (ps >= 0) {
+                        if (u.charAt(i - 1) == '=') {
+                            pe = i - 1;
+                            vs = i;
+                        }
+                    }
+                    if (vs > 0) {
+                        if (u.charAt(i) == '&' || u.charAt(i) == '#') {
+                            ve = i;
+                            p[u.substring(ps, pe)] = decodeURIComponent(u.substring(vs, ve));
+                            ps = i + 1;
+                            vs = 0;
+                        }
+                    }
+                    if (u.charAt(i) == '#') {
+                        if (q < 0) q = i;
+                        hs = i + 1;
+                        break;
+                    }
+                }
+                if (vs > 0) {
+                    ve = u.length;
+                    p[u.substring(ps, pe)] = u.substring(vs, ve);
+                }
+                return {
+                    p: q == -1 ? u : u.substring(0, q),
+                    q: p,
+                    h: hs > 0 ? u.substring(hs) : null
+                };
+            }
+        };
+        var __sc_onDomReady = function () {
+            ___c.Code._OnDomReady();
+        };
+        if (window.jQuery) {
+            if (window.jQuery.on) {
+                window.jQuery(document).on('ready', __sc_onDomReady);
+            } else {
+                window.jQuery(document).ready(__sc_onDomReady);
+            }
+        } else if (window.hasOwnProperty("onload")) {
+            window.onload = __sc_onDomReady;
+        } else if (document.addEventListener) {
+            document.addEventListener("DOMContentLoaded", __sc_onDomReady, false);
+        } else {
+            var _dr_cb_timer;
+            _dr_cb_timer = ___c.Code.runWithTimer(function () { __sc_onDomReady(); window.clearTimeout(_dr_cb_timer); }, _dr_cb_timer, 1000);
+        }
+        ___c.Code._initdata();
+    }
+
+    var ___c_p = ___c.Partner;
+    if (!___c_p.Code) {
+        ___c_p.Code = {
+            LC_COOKIE_NAME: "_cglc",
+            LCT_COOKIE_NAME: "_cglct",
+            LCT_COOKIE_DAYS: 7,
+            DATA_COOKIE_NAME: "cgpd",
+            DATA_COOKIE_DAYS: 90,
+            CG_VID_TAG: "data-cg-vin",
+            API_PATH: "/Cars/api",
+            __p: ___c,
+            __pc: ___c.Code,
+            __n: ___c_p,
+            __d: ___c_p.Data,
+            nodes: {},
+            _nf: false,
+            getDataObj: function () {
+                if (this._c_pm == undefined || this._c_pm == null) {
+                    this._c_pm = this.__pc.getJSONCookie(this.DATA_COOKIE_NAME);
+                }
+                if (this._c_pm == undefined || this._c_pm == null) {
+                    this._c_pm = {};
+                }
+                return this._c_pm;
+            },
+            evictDataObj: function () {
+                this._c_pm = null;
+            },
+            saveDataObj: function () {
+                var od = this.getDataObj();
+                this.__pc.setJSONCookie(this.DATA_COOKIE_NAME, od, this.DATA_COOKIE_DAYS);
+            },
+            error: function (c, ps) {
+                if (c != undefined) {
+                    var od = this.getDataObj();
+                    if (od.es == undefined) {
+                        od.es = [];
+                    }
+                    var v = "" + c;
+                    if (ps != undefined) {
+                        v += "-";
+                        var psl = (ps instanceof Array) ? ps : ["" + ps];
+                        for (var i = 0; i < psl.length; i++) {
+                            v += "" + psl[i] + ":";
+                        }
+                    }
+                    if (od.es.length < 20) {
+                        od.es.push(v);
+                    }
+                    this.saveDataObj();
+                    this.__pc.log("CarGurus.Partner.error - " + v);
+                }
+            },
+            getErrorsToLog: function () {
+                var od = this.getDataObj();
+                if (od != undefined) {
+                    if (od.es != undefined && od.es.length > 0) {
+                        var m = "";
+                        var i = od.es.shift();
+                        while (i != undefined) {
+                            m += "" + i + ",";
+                            i = od.es.shift();
+                        }
+                        this.saveDataObj();
+                        return m;
+                    }
+                }
+                return null;
+            },
+            hasGCI: function (v) {
+                if (v == null || v.length === 0) {
+                    return true;
+                }
+                var gcis = this.getDataObj().gcis;
+                if (gcis != null) {
+                    var l = gcis.length;
+                    for (var i = 0; i < l; i++) {
+                        var g = gcis[i];
+                        if (g === v) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            },
+            recGCI: function (v) {
+                if (v != null && v.length > 0 && !this.hasGCI(v)) {
+                    var od = this.getDataObj();
+                    if (od.gcis == null) {
+                        od.gcis = [];
+                    }
+                    od.gcis.push(v);
+                    var ml = 5;
+                    var l = od.gcis.length;
+                    if (l > ml) {
+                        od.gcis.splice(0, l - ml);
+                    }
+                    this.saveDataObj();
+                }
+            },
+            initCGID: function (v) {
+                var od = this.getDataObj();
+                if (v != null && v.length > 0) {
+                    od.cgid = v;
+                    delete od.cgic;
+                    this.saveDataObj();
+                }
+            },
+            saveCGID: function (v, x, y) {
+                var od = this.getDataObj();
+                od.cgx = x;
+                if (v != null && v.length > 0) {
+                    od.gb = 0;
+                    od.cgid = v;
+                    delete od.cgic;
+                } else {
+                    od.gb = 1;
+                    if ((od.cgid == undefined || od.cgid.length === 0) && (od.cgic == undefined || od.cgic.length === 0) && y != undefined && y.length > 0) {
+                        od.cgic = y;
+                    }
+                }
+                this.saveDataObj();
+            },
+            saveCGLCT: function (y, d) {
+                var lct = this.getCGLCT();
+                var f = (d != undefined && d > 0);
+                if (y != null && y.length > 0 && (f || lct == null || lct !== y)) {
+                    var t;
+                    if (f == true) {
+                        t = d;
+                    } else {
+                        t = this.LCT_COOKIE_DAYS;
+                    }
+                    this.__pc.setCookie(this.LCT_COOKIE_NAME, y, t);
+                    this._c_lct = y;
+                }
+            },
+            saveCGLC: function (d) {
+                if (d > 0) {
+                    this.__pc.setCookie(this.LC_COOKIE_NAME, "c", d);
+                    this._c_lc = "c";
+                    this.__pc.removeCookie(this.LCT_COOKIE_NAME);
+                    this._c_lct = "";
+                }
+            },
+            getCGID: function () {
+                var od = this.getDataObj();
+                if (od.cgid != undefined) {
+                    return od.cgid;
+                }
+                return null;
+            },
+            getCGX: function () {
+                var od = this.getDataObj();
+                if (od.cgx != undefined) {
+                    return od.cgx;
+                }
+                return null;
+            },
+            getCGIC: function () {
+                var od = this.getDataObj();
+                if (od.cgic != undefined) {
+                    return od.cgic;
+                }
+                return null;
+            },
+            getCGGB: function () {
+                var od = this.getDataObj();
+                if (od.gb != undefined) {
+                    return od.gb;
+                }
+                return 0;
+            },
+            getCGLCT: function () {
+                if (this._c_lct == undefined) {
+                    this._c_lct = this.__pc.getCookie(this.LCT_COOKIE_NAME);
+                    if (this._c_lct == undefined) {
+                        this._c_lct = "";
+                    }
+                }
+                return this._c_lct;
+            },
+            getCGLC: function () {
+                if (this._c_lc == undefined) {
+                    this._c_lc = this.__pc.getCookie(this.LC_COOKIE_NAME);
+                    if (this._c_lc == undefined) {
+                        this._c_lc = "";
+                    }
+                }
+                return this._c_lc;
+            },
+            getNodes: function (max) {
+                try {
+                    if (!this._nf) {
+                        var selector = "span[" + this.CG_VID_TAG + "]";
+                        var tempNodes = Array.prototype.slice.call(document.querySelectorAll(selector));
+                        var len = tempNodes.length > max ? max : tempNodes.length;
+
+                        for (var i = 0; i < len; i++) {
+                            var tempNode = tempNodes[i];
+                            var tempNodeAttrs = tempNode.attributes;
+                            var o = { };
+                            var id = null;
+                            for (var j = 0; j < tempNodeAttrs.length; j++) {
+                                var tempAttr = tempNodeAttrs.item(j);
+                                if (tempAttr.name && (/^data-cg-.+/.test(tempAttr.name))) {
+                                    var dval = tempAttr.value;
+                                    if (!dval) {
+                                        continue;
+                                    }
+                                    if (tempAttr.name == this.CG_VID_TAG) {
+                                        id = dval;
+                                    } else {
+                                        var dname = tempAttr.name.replace(/^data-cg-/, "");
+                                        if (dname) {
+                                            o[dname] = dval;
+                                        }
+                                    }
+                                }
+                            }
+                            if (id != null) {
+                                this.nodes[id] = o; // eslint-disable-line dot-notation
+                            }
+                        }
+                        this._nf = true;
+                    }
+                    return this.nodes;
+                } catch (e) {
+                    this.error(201);
+                }
+            }
+        };
+    }
+
+    var ___c_p_m = ___c_p.Metrics;
+    if (!___c_p_m.Code) {
+        ___c_p_m.Code = {
+            API_PATH: "/1.0",
+            NS_API_URI: "/recordMetricsImage.action",
+            API_URI: "/recordMetricsData.action",
+            __p: ___c_p,
+            __pc: ___c_p.Code,
+            __n: ___c_p_m,
+            __d: ___c_p_m.Data,
+            _d: false,
+            _t: false,
+            _v: "",
+            log: function (x) {
+                this.__pc.__pc.log("CarGurus.Partner.Metrics - " + x);
+            },
+            error: function (c, ps) {
+                this.__pc.error(c, ps);
+            },
+            debug: function (x) {
+                if (this._d) {
+                    this.log(x);
+                }
+            },
+            _id: function () {
+                try {
+                    if (!this.__d) {
+                        this.__d = {};
+                    }
+                    if (!this.__d.__id && this.__n.Options) {
+                        this.__pc.__pc.mergeObjects(this.__d, this.__n.Options);
+                        this.__d._xuf = new RegExp("\\/pixel|\\.(js|css|png|gif|jpg|jpeg)(\\?|$)|\\/wp-admin\\/");
+                        this.__d.__id = true;
+                        this.__d._x = true;
+                        this.__d._mv = true;
+                    }
+                } catch (e) {
+                    this.error(301, [2]);
+                }
+            },
+            _fv: function () {
+                try {
+                    this._id();
+                    if (this.__d.AccessKey) {
+                        if (/^sp[0-9]*$/.test(this.__d.AccessKey)) {
+                            this.debug("Misconfigured access key.");
+                            return false;
+                        }
+                        if (/^XX*$/.test(this.__d.AccessKey)) {
+                            this.debug("Misconfigured access key.");
+                            return false;
+                        }
+                        if (/^00*$/.test(this.__d.AccessKey)) {
+                            this.debug("Misconfigured access key.");
+                            return false;
+                        }
+                        return true;
+                    }
+                    this.debug("Access Key not configured.");
+                    return false;
+                } catch (e) {
+                    this.error(301);
+                }
+            },
+            _apiUri: function () {
+                return this.__pc.API_PATH + this.API_PATH + this.API_URI;
+            },
+            parseQuery: function () {
+                if (window.location.search != undefined && window.location.search != null) {
+                    var r = this.__pc.__pc.parseURI(window.location.search);
+                    var v;
+                    var x;
+                    var y;
+                    if (r != null && r.q) {
+                        v = r.q["_cgid"]; // eslint-disable-line dot-notation
+                        x = r.q["_cgx"]; // eslint-disable-line dot-notation
+                        y = r.q["_cggci"]; // eslint-disable-line dot-notation
+                    }
+                    if (v != undefined && v.length > 0) {
+                        this.__pc.saveCGID(v, x);
+                    } else if (y != undefined && y.length > 0) {
+                        if (!this.__pc.hasGCI(y)) {
+                            this.__pc.saveCGID(v, x, y);
+                            this.__pc.saveCGLCT(y);
+                            this.__d._gci = y;
+                        }
+                    }
+                }
+            },
+            onXHR: function (m, u) {
+                try {
+                    this.checkAndRecord(u, undefined, undefined, 'x', 1, 2, this.__d._huf, this.__d._xuf, this.__d._x);
+                } catch (e) {
+                    this.error(317);
+                }
+            },
+            recordAndDataUrl: function (u, e, x, t) {
+                try {
+                    var url = this.__pc.__pc.HOST + this._apiUri();
+                    url += "?k=" + this.__d.AccessKey;
+                    url += "&pv=2a";
+                    this.debug("rdu :" + e + "/" + url);
+                    if (u !== null && u.length > 600) {
+                        u = u.substring(0, 600);
+                    }
+                    url += "&u=" + encodeURIComponent(u);
+                    var es = this.__pc.getErrorsToLog();
+                    if (es != undefined && es !== "") {
+                        url += "&es=" + encodeURIComponent(es);
+                    }
+                    if (e != undefined) {
+                        var events = (e instanceof Array) ? e : ["" + e];
+                        for (var i = 0; i < events.length; i++) {
+                            url += "&e=" + events[i];
+                        }
+                    }
+                    if (t != undefined) {
+                        if (x == undefined) {
+                            x = {};
+                        }
+                        x.t = t;
+                    }
+                    if (x != undefined) {
+                        var xs;
+                        xs = this.__pc.__pc.toJSON(x);
+                        url += "&x=" + encodeURIComponent(xs);
+                    }
+                    try {
+                        var cgid = this.__pc.getCGID();
+                        if (cgid != null && cgid.length > 0) {
+                            url += "&i=" + encodeURIComponent(cgid);
+                        } else {
+                            var cgic = this.__pc.getCGIC();
+                            if (cgic != null && cgic.length > 0) {
+                                url += "&ic=" + encodeURIComponent(cgic);
+                            }
+                        }
+                        var cgx = this.__pc.getCGX();
+                        if (cgx != null) {
+                            url += "&cx=" + encodeURIComponent(cgx);
+                        }
+                        var gb = this.__pc.getCGGB();
+                        if (gb != null && gb > 0) {
+                            url += "&gb=" + encodeURIComponent(gb);
+                        }
+                        var cglc = this.__pc.getCGLC();
+                        if (cglc != null && cglc.length > 0) {
+                            url += "&lc=" + encodeURIComponent(cglc);
+                        }
+                        var cglct = this.__pc.getCGLCT();
+                        if (cglct != null && cglct.length > 0) {
+                            url += "&lct=" + encodeURIComponent(cglct);
+                        }
+                        var gci = this.__d._gci;
+                        if (gci != null && gci.length > 0) {
+                            url += "&gci=" + encodeURIComponent(gci);
+                        }
+                    } catch (ei) {
+                        this.error(302, [1]);
+                    }
+                    url += "&ts=" + (new Date().getTime());
+                    return url;
+                } catch (e) {
+                    this.error(302);
+                }
+            },
+            findText: function (rexp, elm) {
+                try {
+                    if (!elm) elm = document.body;
+                    var nodes = elm.childNodes;
+                    if (!Array.isArray(nodes)) {
+                        nodes = Array.prototype.slice.call(nodes);
+                    }
+                    for (var i = 0; i < nodes.length; i++) {
+                        var item = nodes[i];
+                        if (item.nodeType == Node.TEXT_NODE) {
+                            var expObj = new RegExp(rexp, 'g');
+                            if (expObj.test(item.textContent)) {
+                                this._v = item.textContent.match(expObj)[0];
+                                break;
+                            }
+                        } else if (item.nodeName.toUpperCase() != "IFRAME") {
+                            this.findText(rexp, item);
+                        }
+                    }
+                } catch (e) {
+                    this.error(303);
+                }
+            },
+            getPageType: function (e) {
+                try {
+                    this.debug("gpt :" + e);
+                    var evArray = ["Home", "Search", "Details", "KeyPage", "Directions", "Save", "Lead", "Form"];
+                    var pTypeMap = {
+                        "Home": "home",
+                        "Search": "searchresults",
+                        "Details": "offerdetail",
+                        "KeyPage": "offerdetail",
+                        "Directions": "conversionintent",
+                        "Save": "conversionintent",
+                        "Lead": "conversion",
+                        "Form": "conversion"
+                    };
+                    var pt = "other";
+                    if (e) {
+                        var events = (e instanceof Array) ? e : ["" + e];
+                        evArray.forEach(function (ev, i) {
+                            if (events.indexOf(ev) >= 0) {
+                                pt = pTypeMap[ev];
+                            }
+                        });
+                    }
+                    return pt;
+                } catch (e) {
+                    this.error(304);
+                }
+            },
+            getFacebookEventType: function (pt) {
+                try {
+                    var eTypeMap = {
+                        "searchresults": "Search",
+                        "offerdetail": "ViewContent",
+                        "conversionintent": "AddToCart",
+                        "conversion": "Purchase"
+                    };
+                    var e = "PageView";
+                    if (pt && eTypeMap.hasOwnProperty(pt)) {
+                        e = eTypeMap[pt];
+                    }
+                    return e;
+                } catch (e) {
+                    this.error(305);
+                }
+            },
+            replaceText: function (trp, trr, an, arp, arr, elm) {
+                try {
+                    var _l_pc = this;
+                    if (trp.length <= 0 || trp.length != trr.length || arp.length != arr.length) {
+                        return;
+                    }
+                    if (!elm) elm = document.body;
+                    var nodes = elm.childNodes;
+                    if (!Array.isArray(nodes)) {
+                        nodes = Array.prototype.slice.call(nodes);
+                    }
+                    nodes.forEach(function (item, i) {
+                        if (item.nodeType == Node.TEXT_NODE) {
+                            for (var k = 0; k < trp.length; k++) {
+                                item.textContent = item.textContent.replace(trp[k], trr[k]);
+                            }
+                        } else if (item.nodeName.toUpperCase() != "IFRAME") {
+                            _l_pc.replaceText(trp, trr, an, arp, arr, item);
+                            try {
+                                if (item.nodeType == Node.ELEMENT_NODE) {
+                                    if (item.hasAttributes()) {
+                                        for (var j = item.attributes.length - 1; j >= 0; j--) {
+                                            if (item.attributes[j].name.toUpperCase().match(an)) {
+                                                for (var l = 0; l < arp.length; l++) {
+                                                    item.attributes[j].value = item.attributes[j].value.replace(arp[l], arr[l]);
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else if (item.nodeType == Node.ATTRIBUTE_NODE) {
+                                    if (item.nodeName.toUpperCase().match(an)) {
+                                        for (var m = 0; m < arp.length; m++) {
+                                            item.nodeValue = item.nodeValue.replace(arp[m], arr[m]);
+                                        }
+                                    }
+                                }
+                            } catch (e) {
+                                this.error(306, [1]);
+                                _l_pc.debug(e.toString());
+                            }
+                        }
+                    });
+                } catch (e) {
+                    this.error(306);
+                }
+            },
+            callFireTag: function (c_data, it_ids, id2, pt) {
+                var _l_pc = this;
+                if (c_data) {
+                    var c_id = c_data.c_id;
+                    var c_lbl = c_data.c_lbl;
+                    if (pt === "conversion") {
+                        c_id = c_data.ca_id;
+                        c_lbl = c_data.ca_lbl;
+                    }
+                    if (c_id !== '' && c_lbl !== '') {
+                        _l_pc.fireTag(c_id, c_lbl, it_ids, id2, pt);
+                    }
+                }
+            },
+            insertReMarketingTag: function (c_data, it_ids, id2, pt) {
+                try {
+                    this.debug("irt :" + c_data.ca_id + "/" + c_data.ca_lbl + "/" + c_data.c_id
+                        + "/" + c_data.c_lbl + "/" + pt + "/" + this.__d._mcnt);
+                    var _l_pc = this;
+                    if (this.__d._mcnt == 1) {
+                        var script = document.createElement("script");
+                        script.type = "text/javascript";
+                        script.src = "//www.googleadservices.com/pagead/conversion_async.js";
+                        if (script.readyState) {  // IE
+                            script.onreadystatechange = function () {
+                                _l_pc.debug("rtr :" + c_data.ca_id + "/" + c_data.c_id);
+                                if (script.readyState == "loaded" ||
+                                    script.readyState == "complete") {
+                                    script.onreadystatechange = null;
+                                    _l_pc.callFireTag(c_data, it_ids, id2, pt);
+                                }
+                            };
+                        } else {  // Others
+                            script.onload = function () {
+                                _l_pc.debug("rtl :" + c_data.ca_id + "/" + c_data.ca_lbl + "/"
+                                    + c_data.c_id + "/" + c_data.c_lbl);
+                                _l_pc.callFireTag(c_data, it_ids, id2, pt);
+                            };
+                        }
+                        document.getElementsByTagName("head")[0].appendChild(script);
+                    } else {
+                        _l_pc.callFireTag(c_data, it_ids, id2, pt);
+                    }
+                } catch (e) {
+                    this.error(307);
+                }
+            },
+            insertFacebookPixel: function (fb_id, it_ids, id2, pt) {
+                try {
+                    if (this.__d._mcnt == 1) {
+                        var cids = [];
+                        it_ids.forEach(function (i1) {
+                            id2.forEach(function (i2) {
+                                cids.push(i1 + "_" + i2);
+                            });
+                        });
+                        cids.reverse();
+                        var _l_pc = this;
+                        var ev = _l_pc.getFacebookEventType(pt);
+                        this.debug("ev :" + ev);
+                        var script = document.createElement('script');
+                        var text = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?" +
+                            "n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;" +
+                            "n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;" +
+                            "t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window," +
+                            "document,'script','https://connect.facebook.net/en_US/fbevents.js');" +
+                            "fbq('init', '" + fb_id + "');";
+                        text += ev == "PageView" ? "fbq('trackSingle', '" + fb_id + "', 'PageView');"
+                            : "fbq('trackSingle', '" + fb_id + "', '" + ev + "', {content_type: 'product', content_ids: ['" + cids.join("', '") + "']});";
+                        script.text = text;
+                        document.getElementsByTagName("head")[0].appendChild(script);
+                    } else if (window.fbq) {
+                        if (ev == "PageView") {
+                            window.fbq('trackSingle', fb_id, 'PageView');
+                        } else {
+                            window.fbq('trackSingle', fb_id, ev, { content_type: 'product', content_ids: cids });
+                        }
+                    } else {
+                        this.error(308, [1]);
+                    }
+                } catch (e) {
+                    this.error(308);
+                }
+            },
+            fireTag: function (c_id, c_lbl, it_ids, id2, pt) {
+                try {
+                    this.debug("ft :" + c_id + "/" + c_lbl);
+                    if (window.google_trackConversion) {
+                        var rmkt_only = true;
+                        var conv_params = {};
+                        if (pt === "conversion") {
+                            rmkt_only = false;
+                            conv_params.google_conversion_value = 1.00;
+                            conv_params.google_conversion_currency = "USD";
+                        }
+                        var params = this.__pc.__pc.mergeObjects({
+                            google_conversion_id: c_id,
+                            google_conversion_label: c_lbl,
+                            google_custom_params: {
+                                dynx_itemid: it_ids,
+                                dynx_itemid2: id2,
+                                dynx_pagetype: pt
+                            },
+                            google_remarketing_only: rmkt_only
+                        }, conv_params);
+                        window.google_trackConversion(params);
+                    } else {
+                        this.error(309, [1]);
+                    }
+                } catch (e) {
+                    this.error(309);
+                }
+            },
+            replaceDataI: function () {
+                try {
+                    this.debug("rdi");
+                    if (this.__d._trp != undefined && this.__d._trr != undefined
+                        && this.__d._arp != undefined && this.__d._arr != undefined
+                        && this.__d._sr != undefined) {
+                        var slts = this.__d._sr.split(",");
+                        if (slts.length > 0) {
+                            var _l_pc = this;
+                            slts.forEach(function (slt, i) {
+                                var elms = slt === "" ? [] : document.querySelectorAll(slt);
+                                if (elms.length > 0) {
+                                    elms.forEach(function (elm, i) {
+                                        _l_pc.replaceText(_l_pc.__d._trp, _l_pc.__d._trr, _l_pc.__d._an, _l_pc.__d._arp, _l_pc.__d._arr, elm);
+                                    });
+                                } else {
+                                    _l_pc.replaceText(_l_pc.__d._trp, _l_pc.__d._trr, _l_pc.__d._an, _l_pc.__d._arp, _l_pc.__d._arr);
+                                }
+                            });
+                        }
+                    } else {
+                        this.error(316, [99]);
+                    }
+                } catch (e) {
+                    this.error(316);
+                }
+            },
+            replaceData: function () {
+                try {
+                    this.debug("rd");
+                    if (this.__d._trp != undefined && this.__d._trr != undefined
+                        && this.__d._arp != undefined && this.__d._arr != undefined
+                        && this.__d._sr != undefined) {
+                        this.replaceDataI();
+                        if (this.__d._rrc != undefined && this.__d._rrc > 1) {
+                            try {
+                                var _l_pc = this;
+                                var tmr;
+                                var it = 500;
+                                var ct = it * this.__d._rrc;
+                                tmr = window.setInterval(function () { _l_pc.replaceDataI(); }, it);
+                                window.setTimeout(function () { window.clearInterval(tmr); }, ct);
+                            } catch (e) {
+                                this.error(315, [1]);
+                            }
+                        }
+                    } else {
+                        this.error(315, [99]);
+                    }
+                } catch (e) {
+                    this.error(315);
+                }
+            },
+            manipulate: function (u, e, x, t) {
+                try {
+                    if (this._fv()) {
+                        if (this.__d._mcnt == undefined) {
+                            this.__d._mcnt = 0;
+                        }
+                        this.__d._mcnt++;
+                        if (this.__d._mcnt == 1) {
+                            try {
+                                this.parseQuery();
+                            } catch (ei) {
+                                this.error(310, [1]);
+                            }
+                        }
+                        var url = this.recordAndDataUrl(u, e, x, t);
+                        var xhr = this.__pc.__pc.createCORSRequest('GET', url);
+                        if (!xhr) {
+                            this.debug("Could not create xhr object.");
+                            return;
+                        }
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        var _l_pc = this;
+                        xhr.onload = function () {
+                            try {
+                                if (xhr.status === 200) {
+                                    var r = _l_pc.__pc.__pc.fromJSON(xhr.responseText);
+                                    var edo = ((r.u != undefined && r.u.length > 0) || (r.lcd != undefined && r.lcd > 0) || (r.gci != undefined && r.gci.length > 0));
+                                    if (edo == true) {
+                                        _l_pc.__pc.evictDataObj();
+                                    }
+                                    if (r.u != undefined && r.u.length > 0) {
+                                        _l_pc.__pc.initCGID(r.u);
+                                    }
+                                    if (r.lcd != undefined && r.lcd > 0) {
+                                        if (r.lcc != undefined && r.lcc == true) {
+                                            _l_pc.__pc.saveCGLC(r.lcd);
+                                        } else {
+                                            _l_pc.__pc.saveCGLCT(_l_pc.__pc.getCGLCT(), r.lcd);
+                                        }
+                                    }
+                                    if (r.gci != undefined && r.gci.length > 0) {
+                                        _l_pc.__pc.recGCI(r.gci);
+                                        if (r.gci === _l_pc.__d._gci) {
+                                            _l_pc.__d._gci = null;
+                                        }
+                                    }
+                                    _l_pc._t = (typeof r.it != "undefined" && r.it == true);
+                                    if (typeof r.d != "undefined" && r.d == true) {
+                                        _l_pc._d = true;
+                                    }
+                                    _l_pc.__d._x = (typeof r.x != "undefined" && r.x == true);
+                                    if (_l_pc.__d._x) {
+                                        if (typeof r.xuf != "undefined" && r.xuf.length > 0) {
+                                            _l_pc.__d._xuf = new RegExp(r.xuf);
+                                        }
+                                        if (typeof r.huf != "undefined" && r.huf.length > 0) {
+                                            _l_pc.__d._huf = new RegExp(r.huf);
+                                        }
+                                    }
+                                    if (typeof r.mv != "undefined") {
+                                        _l_pc.__d._mv = (r.mv == true);
+                                    }
+                                    var trp = [];
+                                    var trr = [];
+                                    var arp = [];
+                                    var arr = [];
+                                    if (r.m === true) {
+                                        if (typeof r.rt != "undefined") {
+                                            for (var tkey in r.rt) {
+                                                if (r.rt[tkey] !== "") {
+                                                    trp.push(new RegExp(tkey, 'gi'));
+                                                    _l_pc.debug("rt[k] :" + r.rt[tkey]);
+                                                    trr.push(r.rt[tkey]);
+                                                }
+                                            }
+                                        }
+                                        if (typeof r.ra != "undefined") {
+                                            for (var akey in r.ra) {
+                                                if (r.ra[akey] !== "") {
+                                                    arp.push(new RegExp(akey, 'gi'));
+                                                    _l_pc.debug("ra[k] :" + r.ra[akey]);
+                                                    arr.push(r.ra[akey]);
+                                                }
+                                            }
+                                        }
+                                        if (trp.length > 0) {
+                                            _l_pc.__d._trp = trp;
+                                            _l_pc.__d._trr = trr;
+                                            _l_pc.__d._arp = arp;
+                                            _l_pc.__d._arr = arr;
+                                            _l_pc.__d._an = new RegExp(r.an);
+                                            _l_pc.__d._sr = r.c;
+                                            _l_pc.__d._rrc = r.rrc;
+                                            _l_pc.replaceData();
+                                        }
+                                    }
+                                    if (r.i !== "" &&
+                                        (((typeof r.ci != "undefined") && r.ci !== "")
+                                            || ((typeof r.fbp != "undefined") && r.fbp !== ""))) {
+                                        if (r.ir !== "") {
+                                            _l_pc.findText(r.ir);
+                                        }
+                                        var id2 = r.i2.split("|");
+                                        if (_l_pc._v !== "") {
+                                            if (!_l_pc.__d._mv) {
+                                                id2 = [];
+                                            }
+                                            id2.unshift(_l_pc._v);
+                                        }
+                                        if (typeof r.es != "undefined") {
+                                            e = r.es.split(",");
+                                        }
+                                        var pt = _l_pc.getPageType(e);
+                                        var it_ids = r.i.split("|");
+                                        var c_data = {
+                                            'c_id': r.ci || '',
+                                            'c_lbl': r.cl || '',
+                                            'ca_id': r.cai || '',
+                                            'ca_lbl': r.cal || ''
+                                        };
+                                        _l_pc.insertReMarketingTag(c_data, it_ids, id2, pt);
+                                        if ((typeof r.fbp != "undefined") && r.fbp !== "") {
+                                            _l_pc.insertFacebookPixel(r.fbp, it_ids, id2, pt);
+                                        }
+                                    }
+                                } else {
+                                    _l_pc.error(311, [xhr.status]);
+                                }
+                            } catch (e) {
+                                _l_pc.error(311);
+                            }
+                        };
+                        xhr.onerror = function () {
+                            try {
+                                _l_pc.error(312);
+                            } catch (e) {
+                                _l_pc.error(312, [1]);
+                            }
+                        };
+                        xhr.send();
+                    }
+                } catch (e) {
+                    this.error(310);
+                }
+            },
+            checkAndRecord: function (u, e, x, t, ch, du, he, fe, s) {
+                try {
+                    if (u != undefined && u != null) {
+                        var v = 1;
+                        var ui = null;
+                        var iu = u;
+                        var si = (s != undefined && s == false);
+                        if (ch || fe) {
+                            var hu = this.__pc.__pc.parseURL(window.location.toString());
+                            if (u.length > 1 && (u.charAt(0) == '?' || (u.charAt(0) == '/' && u.charAt(1) != '/'))) {
+                                if (u.charAt(0) == '?') {
+                                    var hui = this.__pc.__pc.parseURI(hu.u);
+                                    if (hui == null || hui.p == null || hui.p.length == 0) {
+                                        ui = "/" + u;
+                                    } else {
+                                        ui = hui.p + u;
+                                    }
+                                } else {
+                                    ui = u;
+                                }
+                                if (hu != null) {
+                                    iu = (hu.s == null ? "http" : hu.s) + '://' + hu.h + (hu.p != null ? ':' + hu.p : '') + ui;
+                                }
+                                this.debug("318-r:" + iu + "<>" + ui); // TODO
+                            } else {
+                                var tu = this.__pc.__pc.parseURL(u);
+                                if (tu == null || tu.h == null || tu.u == null) {
+                                    this.debug("318-u:" + u);
+                                    v = 0;
+                                }
+                                if (v == 1 && tu.u.substring(0, this._apiUri().length) == this._apiUri()) {
+                                    this.debug("318-c:" + tu.u);
+                                    v = 0;
+                                }
+                                if (v == 1 && ch) {
+                                    ui = tu.u;
+                                    if (hu == null || hu.h == null || ((hu.h != tu.h) && !(he && tu.h.match(he)))) {
+                                        if (si) {
+                                            this.debug("318-h:" + tu.h + "<>" + hu.h + "/" + tu.u);
+                                        } else {
+                                            this.error(318, [3, tu.h]);
+                                        }
+                                        v = 0;
+                                    }
+                                }
+                            }
+                            if (v == 1 && fe && ui.match(fe)) {
+                                if (si) {
+                                    this.debug("318-2:" + ui);
+                                } else {
+                                    this.error(318, [2, ui]);
+                                }
+                                v = 0;
+                            }
+                        }
+                        if (v == 1 && du) {
+                            if (!this.__d.__us) {
+                                this.__d.__us = {};
+                            }
+                            if (this.__d.__us[ui]) {
+                                this.debug("318-d:" + ui);
+                                v = 0;
+                            }
+                        }
+                        if (v == 1) {
+                            if (du) {
+                                this.__d.__us[ui] = 1;
+                            }
+                            if (si) {
+                                this.error(318, [1, ui]);
+                            } else {
+                                this.manipulate(iu, e, x, t);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    this.error(318);
+                }
+            },
+            validateAndRecord: function (u, e, x, t) {
+                try {
+                    if (this._fv()) {
+                        var ui = u || window.location.toString();
+                        this.checkAndRecord(ui, e, x, t);
+                    }
+                } catch (e) {
+                    this.error(319);
+                }
+            },
+            record: function (u, e, x) {
+                try {
+                    this.validateAndRecord(u, e, x, 'r');
+                } catch (e) {
+                    this.error(313);
+                }
+            },
+            view: function (e, x) {
+                try {
+                    var ei = e || this.__d.Events;
+                    var xi;
+                    if (ei) {
+                        xi = x || this.__pc.getNodes(100); // maximum hundred nodes
+                    }
+                    this.validateAndRecord(undefined, ei, xi);
+                } catch (e) {
+                    this.error(314);
+                }
+            },
+            _init: function () {
+                var _tx = true;
+                if (this.__n.Options) {
+                    if (this.__n.Options.Debug) {
+                        this._d = true;
+                    }
+                    if (typeof this.__n.Options.MonitorAjax != "undefined" && !this.__n.Options.MonitorAjax) {
+                        _tx = false;
+                    }
+                }
+                if (_tx) {
+                    this.__pc.__pc.tapXHR();
+                }
+                var _l_pc = this;
+                if (this.__pc.__pc.runWithTimer && this.__n.Options.Delay) {
+                    var _t;
+                    var _s_view = function () {
+                        _l_pc._id();
+                        if (_tx) {
+                            try {
+                                _l_pc.__pc.__pc.runOnXHRo(function (m, u) {
+                                    _l_pc.onXHR(m, u);
+                                });
+                            } catch (ei) {
+                                _l_pc.error(300, [1]);
+                            }
+                        }
+                        _l_pc.view();
+                        window.clearTimeout(_t);
+                    };
+                    _t = this.__pc.__pc.runWithTimer(_s_view, _t, this.__n.Options.Delay);
+                } else {
+                    this._id();
+                    if (_tx) {
+                        try {
+                            this.__pc.__pc.runOnXHRo(function (m, u) {
+                                _l_pc.onXHR(m, u);
+                            });
+                        } catch (ei) {
+                            this.error(300, [1]);
+                        }
+                    }
+                    this.view();
+                }
+            }
+        };
+        ___c_p_m.Code._init();
+    }
+}(window, document));
+/* eslint-enable no-underscore-dangle */
