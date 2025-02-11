@@ -45,19 +45,121 @@ body {
 }
 
 
+/* Filter Section */
+
+.filter-section {
+    margin-bottom: 10px;
+    background-color: #041e3a;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+
+/* Filter Header */
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-icon {
+    font-size: 20px;
+    /* Adjust size of the filter icon */
+}
+
+.filter-section h5 {
+    align-items: center;
+}
+
+
+/* Filter Options */
+
+.filter-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-dropdown {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+    background-color: #fff;
+    color: #333;
+}
+
+
+/* Sort and Pagination Section */
+
+.sort-pagination {
+    margin-bottom: 30px;
+}
+
+.pagination-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination-left .btn {
+    padding: 6px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.page-info {
+    font-size: 14px;
+    color: #333;
+}
+
+.sort-pagination .d-flex {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sort-by,
+.per-page {
+    display: flex;
+    align-items: center;
+}
+
+.sort-by label,
+.per-page label {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.sort-dropdown,
+.per-page-dropdown {
+    padding: 6px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
 /* Inventory Card */
 
 .card-box {
     display: flex;
-    background: white;
-    border-radius: 8px;
+    background: whitesmoke;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     padding: 15px;
-    grid-template-columns: repeat(4, 1fr);
-    /* 4 columns */
     gap: 8px;
     font-size: 14px;
+    margin-top: 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-top {
+    background-color: #041e3a;
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
 }
 
 
@@ -72,19 +174,39 @@ body {
 }
 
 
-/* Car Details */
+/*compare button*/
 
-.car-info {
-    flex-grow: 1;
+
+/* Styling the Compare Section */
+
+.compare-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.compare-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: 20%;
+}
+
+.compare-checkbox {
+    width: 20px;
+    height: 20px;
+    color: #041e3a;
 }
 
 
 /* Car Title */
 
 .car-title {
-    font-size: 18px;
-    font-weight: bold;
     margin-bottom: 5px;
+    white-space: nowrap;
 }
 
 
@@ -101,6 +223,70 @@ body {
 .details {
     font-size: 14px;
     margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+    padding: 5px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    /* Rounded corners */
+    text-align: left;
+    white-space: nowrap;
+}
+
+.details-container {
+    display: flex;
+    align-items: center;
+    /* Aligns image and text in one row */
+    gap: 10px;
+    /* Adds space between image and details */
+}
+
+.details-container:hover {
+    cursor: pointer;
+    box-shadow: #333;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 3 columns */
+    align-items: center;
+    position: relative;
+    gap: 1px 70px;
+}
+
+.mileage-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.mileage-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.small-text {
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.fuel-icon {
+    font-size: 3rem;
+    grid-column: 3 / 4;
+    /* Puts the icon in the last column */
+    justify-self: center;
+    /* Aligns the icon to the right */
+}
+
+.fuel-icon i {
+    font-size: 3rem;
+    /* Makes the icon big */
+    font-weight: bold;
+    color: #007bff;
+    /* Adjust color as needed */
 }
 
 
@@ -110,17 +296,51 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    margin-left: 30%;
+    position: relative;
+}
+
+.btn {
+    background-color: gray;
+    color: white;
+    padding: 3px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+    /* Prevents text from wrapping */
+}
+
+.btn:hover {
+    background-color: #041e3a;
+    color: white;
 }
 
 
 /* Get Price Button */
 
-.btn-price {
-    font-weight: bold;
-    background: #007bff;
+.btn-contact {
+    background: rgb(125, 27, 27);
     color: white;
     border: none;
     padding: 5px 10px;
+    white-space: nowrap;
+}
+
+.card-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-box:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.865);
 }
 
 
