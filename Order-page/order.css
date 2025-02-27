@@ -1,0 +1,332 @@
+/*Header Section*/
+
+.upper-header {
+    background-color: rgb(12, 12, 83);
+    color: white;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.upper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.social-icons a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: white;
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+
+/* End of Header Section*/
+
+.vehicle-desc {
+    background: #f8f9fa;
+    padding: 40px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-desc img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.vehicle-desc {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.vehicle-desc h1 span {
+    color: #0056b3;
+}
+
+.vehicle-desc p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+
+/* Style for the product page container */
+
+.product-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+
+/* Style for the image section */
+
+.product-image {
+    max-width: 100%;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+
+/* Style for the form */
+
+.offer-form {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Form labels */
+
+.offer-form label {
+    font-weight: bold;
+}
+
+
+/* Input fields */
+
+.offer-form input,
+.offer-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+/* Submit button */
+
+.offer-form button {
+    width: 30%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.offer-form button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Acknowledgement text */
+
+.acknowledgement {
+    font-size: 12px;
+    color: #6c757d;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+/* Make "Check Availability" form full width */
+
+.Availability {
+    width: 100%;
+    padding: 15px;
+    background-color: whitesmoke;
+    color: black;
+    text-align: left;
+}
+
+
+/* Center heading inside Availability */
+
+.Availability h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+/* Highlighted span inside heading */
+
+.Availability h1 span {
+    color: #0056b3;
+}
+
+
+/* Full-width form inside Availability */
+
+.Availability .offer-form {
+    max-width: 95%;
+    margin: 0 auto;
+    background: white;
+    color: black;
+    padding: 30px;
+}
+
+
+/* Make "Check Testdrive" form full width */
+
+.testdrive {
+    width: 100%;
+    padding: 15px;
+    background-color: whitesmoke;
+    color: black;
+    text-align: left;
+}
+
+
+/* Center heading inside Testdrive */
+
+.testdrive h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+/* Highlighted span inside heading */
+
+.testdrive h1 span {
+    color: #0056b3;
+}
+
+
+/* Full-width form inside Test drive */
+
+.testdrive .offer-form {
+    max-width: 95%;
+    margin: 0 auto;
+    background: white;
+    color: black;
+    padding: 30px;
+}
+
+
+/* test drive*/
+
+.dealerinfo {
+    width: 100%;
+    padding: 15px;
+    background-color: whitesmoke;
+    color: black;
+    text-align: left;
+}
+
+.dealerinfo .dealer {
+    max-width: 95%;
+    margin: 0 auto;
+    background: white;
+    color: black;
+    padding: 30px;
+}
+
+.dealerinfo h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+
+/* Highlighted span inside heading */
+
+.dealerinfo h1 span {
+    color: #0056b3;
+}
+
+
+/* Gallery Section */
+
+.gallery {
+    width: 100%;
+    padding: 15px;
+    background-color: whitesmoke;
+    color: black;
+}
+
+.gallery .gallerydits {
+    max-width: 95%;
+    margin: 0 auto;
+    background: white;
+    color: black;
+    padding: 30px;
+}
+
+.gallery h1 {
+    text-align: left;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.gallery h1 span {
+    color: #0056b3;
+}
+
+
+/* Default Small View */
+
+.small .gallery-img {
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+
+/* Hover Effect */
+
+.gallery-img:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+}
+
+
+/*Footer Section*/
+
+.footer {
+    background-color: #222;
+}
+
+.footer h5 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+.map-container {
+    width: 100%;
+    height: 150px;
+}
